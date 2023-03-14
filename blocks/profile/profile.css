@@ -1,0 +1,10 @@
+.profile {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-top: 36.5px;
+    padding-bottom: 47.5px;
+    display: grid;
+    grid-template-columns: fit-content(127px) 1fr fit-content(150px);
+    column-gap: 24px;
+    align-items: center;
+}
