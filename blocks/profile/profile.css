@@ -1,10 +1,18 @@
 .profile {
     max-width: 880px;
     margin: 0 auto;
-    padding-top: 36.5px;
-    padding-bottom: 47.5px;
     display: grid;
     grid-template-columns: fit-content(127px) 1fr fit-content(150px);
     column-gap: 24px;
     align-items: center;
+    padding: 36.5px 19px 47.5px;
+}
+
+@media screen and (max-width: 768px) {
+    .profile  {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fit, fit-content());
+        row-gap: 22.5px;
+        justify-items: center;
+    }
 }
