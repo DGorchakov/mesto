@@ -20,3 +20,11 @@
 @import url(../blocks/gallery/gallery.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/footer/footer.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__layout/popup__layout.css);
+@import url(../blocks/popup/__close-icon/popup__close-icon.css);
+@import url(../blocks/edit-profile/edit-profile.css);
+@import url(../blocks/edit-profile/__submit/edit-profile__submit.css);
+@import url(../blocks/edit-profile/__text-input/edit-profile__text-input.css);
+@import url(../blocks/edit-profile/__title/edit-profile__title.css);

@@ -1,0 +1,16 @@
+.edit-profile__submit {
+    background: #000000;
+    border-radius: 2px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color:white;
+    height: 50px;
+    border: none;
+    box-shadow: none;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
