@@ -72,11 +72,11 @@
         <div class="popup">
           <div class="popup__layout"></div>
           <div class="popup__container">
-            <div class="popup__close-icon"></div>
+            <div class="popup__close-btn"></div>
             <form class="edit-profile">
               <h2 class="edit-profile__title">Редактировать профиль</h2>
-              <input type="text" name="name" class="edit-profile__text-input" placeholder="Ваше имя">
-              <input type="text" name ="about" class="edit-profile__text-input" placeholder="О себе">
+              <input type="text" maxlength="50" name="name" class="edit-profile__text-input edit-profile__text-input_name" placeholder="Имя">
+              <input type="text" maxlength="50" name ="about" class="edit-profile__text-input edit-profile__text-input_about"  placeholder="О себе">
               <input type="submit" class="edit-profile__submit" value="Сохранить">
             </form>
           </div>
@@ -86,5 +86,6 @@
         <p class="footer__copyright">&copy; 2023. Дмитрий Горчаков</p>
       </footer>
   </div>
+  <script src="./index.js"></script>
 </body>
 </html>
