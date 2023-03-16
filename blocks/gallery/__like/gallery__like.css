@@ -6,4 +6,18 @@
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
+    transition: opacity ease 0.4s;
+}
+
+.gallery__like:hover {
+    opacity: 0.5;
+}
+
+.gallery__like:disabled {
+    opacity: 1;
+}
+
+.gallery__like:active {
+    background-image: url(../../../images/like-active.svg);
+    opacity: 1;
 }
