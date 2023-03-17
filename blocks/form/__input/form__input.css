@@ -1,4 +1,4 @@
-.edit-profile__text-input{
+.form__input{
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -10,6 +10,6 @@
     margin-bottom: 30px;
 }
 
-.edit-profile__text-input:focus {
+.form__input:focus {
     outline: none;
 }

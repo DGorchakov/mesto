@@ -3,7 +3,7 @@
     height: 50px;
     background-image: url(../../../images/add-symbol.svg);
     background-size: 22px;
-    background-color: black;
+    background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
     border: 1px solid white;
@@ -20,5 +20,11 @@
     .profile__add-button  {
         margin-top: 13.5px;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .profile__add-button {
+        background-size: 16px;
     }
 }

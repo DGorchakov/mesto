@@ -7,9 +7,11 @@
     background-position: center;
     position: relative;
     bottom: 42px;
-    left: 474px;
+    left: calc(100% + 40px);
     cursor: pointer;
     transition: opacity ease 0.4s;
+    background-color: transparent;
+    border: none;
 }
 
 .popup__close-btn:hover {

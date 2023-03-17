@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-content: center;
     row-gap: 16px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 420px) {

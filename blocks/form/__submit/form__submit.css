@@ -1,4 +1,4 @@
-.edit-profile__submit {
+.form__submit {
     background: #000000;
     border-radius: 2px;
     font-style: normal;
@@ -15,7 +15,7 @@
     transition: opacity ease 0.4s;
 }
 
-.edit-profile__submit:hover {
+.form__submit:hover {
     opacity: 0.8;
 }
 
