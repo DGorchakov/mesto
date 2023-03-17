@@ -9,8 +9,8 @@ let formNameInput = editForm.querySelector('.form__input_type_name');
 let formAboutInput = editForm.querySelector('.form__input_type_about');
 
 editButton.addEventListener('click', ()=> {
-    formNameInput.value = name.innerHTML;
-    formAboutInput.value = about.innerHTML;
+    formNameInput.value = name.textContent;
+    formAboutInput.value = about.textContent;
     popup.classList.add(POPUP_OPEN);
 });
 
@@ -19,7 +19,7 @@ closePopupBtn.addEventListener('click', closePopup);
 editForm.addEventListener('submit', (e) => {
     e.preventDefault();
     name.textContent = formNameInput.value;
-    about.innerHTML = formAboutInput.value;
+    about.textContent = formAboutInput.value;
     closePopup();
 });
 
