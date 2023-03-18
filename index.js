@@ -4,9 +4,9 @@ let closePopupBtn = document.querySelector('.popup__close-btn')
 let name = document.querySelector('.profile__title');
 let about = document.querySelector('.profile__about');
 let popup = document.querySelector('.popup');
-let editForm = popup.querySelector('.form');
-let formNameInput = editForm.querySelector('.form__input_type_name');
-let formAboutInput = editForm.querySelector('.form__input_type_about');
+let editForm = popup.querySelector('.popup__form');
+let formNameInput = editForm.querySelector('.popup__input_type_name');
+let formAboutInput = editForm.querySelector('.popup__input_type_about');
 
 editButton.addEventListener('click', ()=> {
     formNameInput.value = name.textContent;
