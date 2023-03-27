@@ -5,11 +5,11 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative;
-    bottom: 42px;
-    left: calc(100% + 40px);
+    position: absolute;
+    right: -40px;
+    top: -40px;
     cursor: pointer;
-    transition: opacity ease 0.4s;
+    transition: opacity ease 0.1s;
     background-color: transparent;
     border: none;
 }
@@ -20,8 +20,8 @@
 
 @media screen and (max-width: 768px) {
     .popup__close-btn {
-        bottom: 50px;
-        left: 100%;
+        top: -48px;
+        right: 0;
     }
 }
 

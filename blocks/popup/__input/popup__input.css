@@ -13,3 +13,12 @@
 .popup__input:focus {
     outline: none;
 }
+
+.popup__input::placeholder {
+    color: #C4C4C4;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}

@@ -1,0 +1,20 @@
+.gallery__trush-btn {
+    width: 19px;
+    height: 19px;
+    background-image: url(../../../images/trash.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity ease 0.1s;
+    background-color: transparent;
+    border: none;
+}
+
+.gallery__trush-btn:hover {
+    opacity: 0.6;
+}
