@@ -87,6 +87,7 @@ function createImageViewPopup(card) {
     const placeName = popup.querySelector('.popup__place-name');
 
     image.src = card.link;
+    image.alt = card.name;
     placeName.textContent = card.name;
 
     popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
