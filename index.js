@@ -1,8 +1,8 @@
-const POPUP_OPENED = 'popup_opened'
 const editButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__about');
+const galleryContainer = document.querySelector('.gallery__container');
 
 const initialCards = [
     {
@@ -44,11 +44,11 @@ const editProfilePopup = createEditProfilePopup();
 const addPlacePopup = createAddPlacePopup();
 const imageViewPopup = createImageViewPopup();
 
-let galleryItems = initialCards.map(createGalleryItem);
+const galleryItems = initialCards.map(createGalleryItem);
 galleryItems.forEach(addGalleryItem);
 
-editButton.addEventListener('click', () => openPopup(editProfilePopup, profileState));
-addPlaceButton.addEventListener('click', () => openPopup(addPlacePopup));
+editButton.addEventListener('click', () => openPopup(editProfilePopup.render(profileState)));
+addPlaceButton.addEventListener('click', () => openPopup(addPlacePopup.render()));
 
 function createEditProfilePopup() {
     const popup = document.querySelector('.profile-popup');
@@ -57,7 +57,7 @@ function createEditProfilePopup() {
     const aboutInput = form.querySelector('.popup__input_type_about');
 
     popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', e => {
         e.preventDefault();
         profileState.name = nameInput.value;
         profileState.about = aboutInput.value;
@@ -66,10 +66,10 @@ function createEditProfilePopup() {
     });
 
     const editProfilePopup = {
-      content: popup,
       render(profileState) {
         nameInput.value = profileState.name;
         aboutInput.value = profileState.about;
+        return popup;
       }
     }
 
@@ -85,7 +85,7 @@ function createAddPlacePopup() {
     popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
     form.addEventListener('submit', e => {
         e.preventDefault();
-        let card = {
+        const card = {
             name: nameInput.value,
             link: linkInput.value
         };
@@ -95,7 +95,9 @@ function createAddPlacePopup() {
     });
 
     const addPlacePopup = {
-      content: popup
+      render(state) {
+        return popup;
+      }
     }
 
     return addPlacePopup;
@@ -109,11 +111,12 @@ function createImageViewPopup() {
     popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
 
     const imageViewPopup = {
-      content: popup,
       render(state) {
+        if (!state) return popup;
         image.src = state.link;
         image.alt = state.name;
         placeName.textContent = state.name;
+        return popup;
       }
     }
 
@@ -127,12 +130,13 @@ function createGalleryItem(card) {
     const likeBtn = galleryItem.querySelector('.gallery__like');
     const trashBtn = galleryItem.querySelector('.gallery__trush-btn');
     const placeName = galleryItem.querySelector('.gallery__name');
+    const LIKE_ACTIVE = 'gallery__like_active';
 
     placeName.textContent = card.name;
-    galleryImg.alt = card.name 
+    galleryImg.alt = card.name;
 
     if (!card.link) card.link = './images/no-photo.jpg';
-    galleryImg.src = card.link 
+    galleryImg.src = card.link; 
 
     galleryImg.onerror = function() {
         galleryImg.src = './images/no-photo.jpg';
@@ -140,7 +144,7 @@ function createGalleryItem(card) {
     }
 
     likeBtn.addEventListener('click', () => {
-        likeBtn.style.backgroundImage = 'url(./images/like-active.svg)';
+        likeBtn.classList.toggle(LIKE_ACTIVE);
     });
 
     trashBtn.addEventListener('click', () => {
@@ -148,24 +152,21 @@ function createGalleryItem(card) {
     });
 
     galleryImg.addEventListener('click', () => {
-        openPopup(imageViewPopup, card);
+        openPopup(imageViewPopup.render(card));
     });
 
     return galleryItem;
 }
 
 function addGalleryItem(galleryItem) {
-  document.querySelector('.gallery__container').prepend(galleryItem);
+  galleryContainer.prepend(galleryItem);
 }
 
 function closePopup(popup) {
-  popup.classList.toggle(POPUP_OPENED);
+  popup.classList.remove('popup_opened');
 }
 
-function openPopup(popup, state) {
-  if (state) {
-    popup.render(state);
-  }
-  popup.content.classList.toggle(POPUP_OPENED);
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
   

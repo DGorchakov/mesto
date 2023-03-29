@@ -19,6 +19,7 @@
 @import url(../blocks/gallery/__name/gallery__name.css);
 @import url(../blocks/gallery/__trush-btn/gallery__trush-btn.css);
 @import url(../blocks/gallery/gallery.css);
+@import url(../blocks/gallery/__like/_active/gallery__like_active.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
