@@ -47,6 +47,9 @@ const imageViewPopup = createImageViewPopup();
 const galleryItems = initialCards.map(createGalleryItem);
 galleryItems.forEach(addGalleryItem);
 
+const popups = Array.from(document.querySelectorAll('.popup'));
+popups.forEach(setDefaultPopupListeners);
+
 editButton.addEventListener('click', () => openPopup(editProfilePopup.render(profileState)));
 addPlaceButton.addEventListener('click', () => openPopup(addPlacePopup.render()));
 
@@ -56,7 +59,6 @@ function createEditProfilePopup() {
     const nameInput = form.querySelector('.popup__input_type_name');
     const aboutInput = form.querySelector('.popup__input_type_about');
 
-    popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
     form.addEventListener('submit', e => {
         e.preventDefault();
         profileState.name = nameInput.value;
@@ -82,7 +84,6 @@ function createAddPlacePopup() {
     const nameInput = form.querySelector('.popup__input_type_name');
     const linkInput = form.querySelector('.popup__input_type_link');
 
-    popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
     form.addEventListener('submit', e => {
         e.preventDefault();
         const card = {
@@ -107,8 +108,6 @@ function createImageViewPopup() {
     const popup = document.querySelector('.image-popup');
     const image = popup.querySelector('.popup__img');
     const placeName = popup.querySelector('.popup__place-name');
-
-    popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
 
     const imageViewPopup = {
       render(state) {
@@ -158,6 +157,19 @@ function createGalleryItem(card) {
     return galleryItem;
 }
 
+function setDefaultPopupListeners(popup) {
+  popup.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closePopup(popup);
+  });
+
+  document.addEventListener('keydown', e => {
+    console.log(e.key);
+    if (e.key === "Esc" || e.key === "Escape") closePopup(popup);
+  });
+
+  popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
+}
+
 function addGalleryItem(galleryItem) {
   galleryContainer.prepend(galleryItem);
 }
@@ -169,4 +181,3 @@ function closePopup(popup) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
-  
