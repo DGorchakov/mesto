@@ -27,14 +27,20 @@ function setEventListeners(form, formSelectors) {
             toggleButtonState(inputList, submitButton, formSelectors.inactiveButtonClass);
         });
     });
-    form.addEventListener('submit', () => {
+    form.addEventListener('reset', () => {
         toggleButtonState(inputList, submitButton, formSelectors.inactiveButtonClass);
     })
 }
 
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
-    if (hasInvalidInput(inputList)) buttonElement.classList.add(inactiveButtonClass);
-    else buttonElement.classList.remove(inactiveButtonClass);
+    if (hasInvalidInput(inputList)) {
+        buttonElement.classList.add(inactiveButtonClass);
+        buttonElement.disabled = true;
+    }
+    else {
+        buttonElement.classList.remove(inactiveButtonClass);
+        buttonElement.disabled = false;
+    }
 }
 
 function hasInvalidInput(inputList) {
