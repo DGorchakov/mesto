@@ -1,3 +1,5 @@
+import Card from './card.js'
+
 const editButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__title');
@@ -44,8 +46,11 @@ const editProfilePopup = createEditProfilePopup();
 const addPlacePopup = createAddPlacePopup();
 const imageViewPopup = createImageViewPopup();
 
-const galleryItems = initialCards.map(createGalleryItem);
-galleryItems.forEach(addGalleryItem);
+const galleryItems = initialCards.map(card => new Card(card, '#card-template'));
+galleryItems.forEach(card => {
+    addGalleryItem(card.getCardElement());
+    setOpenPopupListener(card);
+  });
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 popups.forEach(setDefaultPopupListeners);
@@ -122,39 +127,14 @@ function createImageViewPopup() {
     return imageViewPopup;
 }
 
-function createGalleryItem(card) {
-    const cardTemplate = document.querySelector('#card-template').content;
-    const galleryItem = cardTemplate.querySelector('.gallery__item').cloneNode(true);
-    const galleryImg = galleryItem.querySelector('.gallery__img');
-    const likeBtn = galleryItem.querySelector('.gallery__like');
-    const trashBtn = galleryItem.querySelector('.gallery__trush-btn');
-    const placeName = galleryItem.querySelector('.gallery__name');
-    const LIKE_ACTIVE = 'gallery__like_active';
+function addGalleryItem(galleryItem) {
+  galleryContainer.prepend(galleryItem);
+}
 
-    placeName.textContent = card.name;
-    galleryImg.alt = card.name;
-
-    if (!card.link) card.link = './images/no-photo.jpg';
-    galleryImg.src = card.link; 
-
-    galleryImg.onerror = function() {
-        galleryImg.src = './images/no-photo.jpg';
-        card.link = './images/no-photo.jpg';
-    }
-
-    likeBtn.addEventListener('click', () => {
-        likeBtn.classList.toggle(LIKE_ACTIVE);
-    });
-
-    trashBtn.addEventListener('click', () => {
-        galleryItem.remove();
-    });
-
-    galleryImg.addEventListener('click', () => {
-        openPopup(imageViewPopup.render(card));
-    });
-
-    return galleryItem;
+function setOpenPopupListener(card) {
+  card.getCardElement().querySelector('.gallery__img').addEventListener('click', () => {
+      openPopup(imageViewPopup.render(card.state));
+  });
 }
 
 function setDefaultPopupListeners(popup) {
@@ -163,10 +143,6 @@ function setDefaultPopupListeners(popup) {
   });
 
   popup.querySelector('.popup__close-btn').addEventListener('click', () => closePopup(popup));
-}
-
-function addGalleryItem(galleryItem) {
-  galleryContainer.prepend(galleryItem);
 }
 
 function closePopup(popup) {
