@@ -1,4 +1,5 @@
-import Card from './card.js'
+import Card from './Card.js'
+import FormValidator from './FormValidator.js';
 
 const editButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
@@ -55,6 +56,17 @@ galleryItems.forEach(card => {
 const popups = Array.from(document.querySelectorAll('.popup'));
 popups.forEach(setDefaultPopupListeners);
 
+const formList = Array.from(document.querySelectorAll('.popup__form'));
+formList.forEach(form => {
+  new FormValidator({
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+  }, form).enableValidation();
+});
+
 editButton.addEventListener('click', () => openPopup(editProfilePopup.render(profileState)));
 addPlaceButton.addEventListener('click', () => openPopup(addPlacePopup.render()));
 
@@ -95,7 +107,7 @@ function createAddPlacePopup() {
             name: nameInput.value,
             link: linkInput.value
         };
-        addGalleryItem(createGalleryItem(card));
+        addGalleryItem(new Card(card, '#card-template').getCardElement());
         e.target.reset();
         closePopup(placePopup);
     });
