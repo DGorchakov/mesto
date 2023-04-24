@@ -1,8 +1,16 @@
 export default class Card {
-    constructor(data, templateSelector) {
+
+    _element;
+    _galleryImg;
+    _likeBtn;
+    _trashBtn;
+    _handleCardClick;
+
+    constructor(data, templateSelector, handleCardClick) {
         this._name = data.name;
         this._link = data.link;
         this._templateSelector = templateSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     get state() {
@@ -12,15 +20,13 @@ export default class Card {
     getCardElement() {
         if (this._element) return this._element;
 
-        this._element = this._getTemplate();
-        this._setEventListeners();
-        
+        this._element = this._getTemplate();        
         this._element.querySelector('.gallery__name').textContent = this._name;
+        this._galleryImg = this._element.querySelector('.gallery__img');
+        this._galleryImg.alt = this._name;
+        this._galleryImg.src = this._link;
+        this._setEventListeners();
 
-        const galleryImg = this._element.querySelector('.gallery__img');
-        galleryImg.alt = this._name;
-        galleryImg.src = this._link;
-        
         return this._element;
     }
 
@@ -35,20 +41,23 @@ export default class Card {
       }
 
     _setEventListeners() {
-        const galleryImg = this._element.querySelector('.gallery__img');
-        const likeBtn = this._element.querySelector('.gallery__like');
-        const trashBtn = this._element.querySelector('.gallery__trush-btn');
+        this._likeBtn = this._element.querySelector('.gallery__like');
+        this._trashBtn = this._element.querySelector('.gallery__trush-btn');
 
-        galleryImg.onerror = function() {
-            galleryImg.src = './images/no-photo.jpg';
+        this._galleryImg.onerror = function() {
+            this._galleryImg.src = './images/no-photo.jpg';
             this._link = './images/no-photo.jpg';
         }
 
-        likeBtn.addEventListener('click', () => {
-            likeBtn.classList.toggle('gallery__like_active');
+        this._galleryImg.addEventListener('click', () => {
+            this._handleCardClick(this._name, this._link);
+        })
+
+        this._likeBtn.addEventListener('click', () => {
+            this._likeBtn.classList.toggle('gallery__like_active');
         });
 
-        trashBtn.addEventListener('click', () => {
+        this._trashBtn.addEventListener('click', () => {
             this._element.remove();
         });
     }

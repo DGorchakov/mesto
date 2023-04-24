@@ -7,6 +7,8 @@ const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__about');
 const galleryContainer = document.querySelector('.gallery__container');
 
+const formValidators = {};
+
 const initialCards = [
     {
       name: 'Архыз',
@@ -34,6 +36,15 @@ const initialCards = [
     }
   ]
 
+  const validatorConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+  }
+
 const profileState = {
   name: profileName.textContent, 
   about: profileAbout.textContent,
@@ -47,32 +58,31 @@ const editProfilePopup = createEditProfilePopup();
 const addPlacePopup = createAddPlacePopup();
 const imageViewPopup = createImageViewPopup();
 
-const galleryItems = initialCards.map(card => new Card(card, '#card-template'));
-galleryItems.forEach(card => {
-    addGalleryItem(card.getCardElement());
-    setOpenPopupListener(card);
-  });
+const cardsElements = initialCards.map(createCard);
+cardsElements.forEach(addCardToGallery);
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 popups.forEach(setDefaultPopupListeners);
 
-const formList = Array.from(document.querySelectorAll('.popup__form'));
-formList.forEach(form => {
-  new FormValidator({
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit',
-    inactiveButtonClass: 'popup__submit_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
-  }, form).enableValidation();
-});
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validatorConfig);
+
 
 editButton.addEventListener('click', () => openPopup(editProfilePopup.render(profileState)));
 addPlaceButton.addEventListener('click', () => openPopup(addPlacePopup.render()));
 
 function createEditProfilePopup() {
     const profilePopup = document.querySelector('.profile-popup');
-    const form = profilePopup.querySelector('.popup__form');
+    const form = document.forms['edit-profile'];
     const nameInput = form.querySelector('.popup__input_type_name');
     const aboutInput = form.querySelector('.popup__input_type_about');
 
@@ -97,7 +107,7 @@ function createEditProfilePopup() {
 
 function createAddPlacePopup() {
     const placePopup = document.querySelector('.place-popup');
-    const form = placePopup.querySelector('.popup__form');
+    const form = document.forms["add-place"];
     const nameInput = form.querySelector('.popup__input_type_name');
     const linkInput = form.querySelector('.popup__input_type_link');
 
@@ -107,7 +117,7 @@ function createAddPlacePopup() {
             name: nameInput.value,
             link: linkInput.value
         };
-        addGalleryItem(new Card(card, '#card-template').getCardElement());
+        addCardToGallery(createCard(card));
         e.target.reset();
         closePopup(placePopup);
     });
@@ -139,14 +149,16 @@ function createImageViewPopup() {
     return imageViewPopup;
 }
 
-function addGalleryItem(galleryItem) {
-  galleryContainer.prepend(galleryItem);
+function createCard(cardData) {
+  return new Card(cardData, '#card-template', handleCardClick).getCardElement();
 }
 
-function setOpenPopupListener(card) {
-  card.getCardElement().querySelector('.gallery__img').addEventListener('click', () => {
-      openPopup(imageViewPopup.render(card.state));
-  });
+function addCardToGallery(card) {
+  galleryContainer.prepend(card);
+}
+
+function handleCardClick(name, link) {
+  openPopup(imageViewPopup.render({name, link}));
 }
 
 function setDefaultPopupListeners(popup) {
