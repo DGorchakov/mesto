@@ -23,9 +23,9 @@ export default class Card {
         this._element = this._getTemplate();        
         this._element.querySelector('.gallery__name').textContent = this._name;
         this._galleryImg = this._element.querySelector('.gallery__img');
+        this._setEventListeners();
         this._galleryImg.alt = this._name;
         this._galleryImg.src = this._link;
-        this._setEventListeners();
 
         return this._element;
     }
@@ -44,7 +44,7 @@ export default class Card {
         this._likeBtn = this._element.querySelector('.gallery__like');
         this._trashBtn = this._element.querySelector('.gallery__trush-btn');
 
-        this._galleryImg.onerror = function() {
+        this._galleryImg.onerror = () => {
             this._galleryImg.src = './images/no-photo.jpg';
             this._link = './images/no-photo.jpg';
         }
