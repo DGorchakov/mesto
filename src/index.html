@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>Mesto.Russia</title>
+</head>
+<body>
+  <div class="page">
+      <header class="header">
+        <div class="header__logo"></div>
+      </header>
+      <main class="content">
+        <section class="profile">
+          <img src="<%=require('./images/kusto-avatar.jpg')%>" class="profile__avatar" alt="Аватар">
+          <div class="profile__info">
+            <div class="profile__name">
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <button type="button" class="profile__edit-button" aria-label="Редактировать профиль"></button>
+            </div>
+            <p class="profile__about">Исследователь океана</p>
+          </div>
+          <button type="button" class="profile__add-button" aria-label="Добавить изображение"></button>
+        </section>
+        <section class="gallery" aria-label="Галерея с изображениями">
+          <ul class="gallery__container">
+          </ul>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="footer__copyright">&copy; 2023. Дмитрий Горчаков</p>
+      </footer>
+  </div>
+  <div class="popup profile-popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close-btn" aria-label="Закрыть модальное окно"></button>
+      <form class="popup__form" name="edit-profile" novalidate>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" name="name" id="name" class="popup__input popup__input_type_name" placeholder="Имя" required minlength="2" maxlength="40">
+        <span class="popup__error name-error"></span>
+        <input type="text" name ="about" id="about" class="popup__input popup__input_type_about"  placeholder="О себе" required minlength="2" maxlength="200">
+        <span class="popup__error about-error"></span>
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup place-popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close-btn" aria-label="Закрыть модальное окно"></button>
+      <form class="popup__form" name="add-place" novalidate>
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" name="name" id="email" class="popup__input popup__input_type_name" placeholder="Название" required minlength="2" maxlength="30">
+        <span class="popup__error email-error"></span>
+        <input type="url" name ="link" id="link" class="popup__input popup__input_type_link"  placeholder="Ссылка на карточку" required>
+        <span class="popup__error link-error"></span>
+        <button type="submit" class="popup__submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup image-popup">
+      <div class="popup__image-container">
+      <button type="button" class="popup__close-btn" aria-label="Закрыть модальное окно"></button>
+      <img class="popup__img" src="example" alt="Example">
+      <h2 class="popup__place-name">Example</h2>
+    </div>
+  </div>
+  <template id="card-template">
+    <li class="gallery__item">
+      <button type="button" class="gallery__trush-btn" aria-label="Удалить карточку"></button>
+      <img class="gallery__img">
+      <div class="gallery__description">
+        <h2 class="gallery__name"></h2>
+        <button type="button" class="gallery__like" aria-label="Нравится"></button>
+      </div>
+    </li>
+  </template>
+</body>
+</html>
