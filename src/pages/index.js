@@ -1,10 +1,10 @@
 import '../pages/index.css';
-import Card from './Card.js'
-import FormValidator from './FormValidator.js';
-import PopupWithForm from './PopupWithForm';
-import PopupWithImage from './PopupWithImage';
-import Section from './Section.js';
-import UserInfo from './UserInfo';
+import Card from '../components/Card.js'
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm';
+import PopupWithImage from '../components/PopupWithImage';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo';
 import {
   initialCards,
   validatorConfig,
@@ -38,8 +38,7 @@ const user = new UserInfo(profileNameSelector, profileAboutSelector);
 const galleryList = new Section({
   items: initialCards, 
   renderer: (card) => {
-    const cardEl = new Card(card, '#card-template', handleCardClick).getCardElement();
-    galleryList.addItem(cardEl);
+    galleryList.addItem(createCard(card));
   }
 }, galleryContainerSelector);
 
@@ -47,9 +46,8 @@ galleryList.renderItems();
 
 const popups = {
   imageView : new PopupWithImage(popupWithImageSelector),
-  addPlace : new PopupWithForm(addPlacePopupSelector,  (e, inputValues) => {
-    const card = new Card(inputValues, '#card-template', handleCardClick).getCardElement();
-    galleryList.addItem(card);
+  addPlace : new PopupWithForm(addPlacePopupSelector,  (e, data) => {
+    galleryList.addItem(createCard(data));
     e.target.reset();
   }),
   editProfile : new PopupWithForm(editProfilePopupSelector, (e, inputValues) => {
@@ -60,10 +58,14 @@ const popups = {
 Object.values(popups).forEach(popup => popup.setEventListeners());
 
 addPlaceButton.addEventListener('click', () => popups.addPlace.open());
-editButton.addEventListener('click', () => popups.editProfile.open(user.getUserInfo()));
+editButton.addEventListener('click', () => popups.editProfile.setInputValues(user.getUserInfo()).open());
 
 function handleCardClick(name, link) {
   popups.imageView.open(name, link);
+}
+
+function createCard(data) {
+  return new Card(data, '#card-template', handleCardClick).getCardElement();
 }
 
 

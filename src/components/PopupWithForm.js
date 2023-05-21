@@ -21,11 +21,6 @@ export default class PopupWithForm extends Popup {
         this._formEl.reset();
     }
 
-    open(presetValues) {
-        super.open();
-        if (presetValues) this._setInputValues(presetValues);
-    }
-
     _getInputValues() {
         const inputValues = {};
 
@@ -36,9 +31,11 @@ export default class PopupWithForm extends Popup {
         return inputValues;
     }
 
-    _setInputValues(data) {
+    setInputValues(data) {
         Array.from(this._formEl.elements).forEach(el => {
             if (el.tagName === "INPUT") el.value = data[el.name];
         });
+
+        return this;
     }
 }
