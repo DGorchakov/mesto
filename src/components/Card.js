@@ -50,11 +50,19 @@ export default class Card {
         })
 
         this._likeBtn.addEventListener('click', () => {
-            this._likeBtn.classList.toggle('gallery__like_active');
+            this._toggleLikeState();
         });
 
         this._trashBtn.addEventListener('click', () => {
-            this._element.remove();
+            this._removeCardElement();
         });
+    }
+
+    _toggleLikeState() {
+        this._likeBtn.classList.toggle('gallery__like_active');
+    }
+
+    _removeCardElement() {
+        this._element.remove();
     }
 }
