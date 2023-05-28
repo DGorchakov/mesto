@@ -1,0 +1,22 @@
+@keyframes move {
+    0% {right: -400px}
+    30% {right: 20px}
+    70% {right: 20px;}
+    100% {right: -400px;}
+}
+
+
+.notification {
+    font-family: 'Inter', 'Arial', sans-serif;
+    color:rgb(78, 76, 76);
+    width: 350px;
+    position: fixed;
+    background-color: white;
+    top: 40px;
+    right: 10px;
+    border-radius: 4px;
+    padding: 20px 30px;
+ 
+    animation-duration: 4s;
+    animation-direction: normal;
+}

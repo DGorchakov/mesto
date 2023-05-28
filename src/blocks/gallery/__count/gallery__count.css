@@ -1,0 +1,9 @@
+.gallery__count {
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    height: 13px;
+    color: #000000;
+}

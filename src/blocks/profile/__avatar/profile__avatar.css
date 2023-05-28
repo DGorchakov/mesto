@@ -2,5 +2,9 @@
     display: block;
     border-radius: 50%;
     height: 127px;
-
+    width: 127px;
+    background-image: url('../../../images/avatar.svg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
 }
