@@ -1,3 +1,4 @@
 .notification_type_error {
-    border-left: 5px solid red;
+    border-left: 5px solid #D75A4A;
+    background-image: url(../../../../images/error.svg);
 }

@@ -7,6 +7,7 @@ import PopupWithImage from '../components/PopupWithImage';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo';
 import Api from '../components/Api';
+import NotificationFactory from '../components/NotificationFactory';
 import {
   validatorConfig,
   editButton,
@@ -30,6 +31,8 @@ const api = new Api({
   }
 })
 
+const notificationFactory = new NotificationFactory('#notification-template', document.querySelector('.notification__list'));
+
 const formValidators = {};
 
   const enableValidation = (config) => {
@@ -52,7 +55,7 @@ const popups = {
   editProfile : new PopupWithForm(editProfilePopupSelector, (e, inputValues) => {
     api.updateUserInfo(inputValues)
     .then(userData => user.setUserInfo(userData))
-    .catch(err => console.log(err));
+    .catch(showErrorNotification);
   })
 }
 
@@ -63,14 +66,14 @@ const userInfoRequest = api.getUserInfo()
   {user.setUserInfo(userData);
    user.setAvatar(userData);
   })
-.catch(err => console.log(err));
+.catch(showErrorNotification);
 
 const initalCardRequest = api.getInitalCards()
 .then(cards => renderGalleryList(cards))
 .then(galleryList => {
   popups.addPlace = createAddPlacePopup(galleryList);
 })
-.catch(err => console.log(err));
+.catch(showErrorNotification);
 
 Promise.all([initalCardRequest]).then(value => {
   Object.values(popups).forEach(popup => popup.setEventListeners());
@@ -87,8 +90,10 @@ function handleCardClick(name, link) {
 
 function handleDeleteCard() {
   api.deleteCard(this.id)
-  .then(res => this.removeCardElement())
-  .catch(err => console.log(err));
+  .then(res => {this.removeCardElement(); 
+    showSuccessNotification("Карточка удалена");
+  })
+  .catch(showErrorNotification);
 }
 
 function handleLikeClick() {
@@ -99,7 +104,7 @@ function handleLikeClick() {
       this.toggleLikeState(!this.isLiked);
       this.setLikedByCurrentUser(!this.isLiked);
     })
-    .catch(err => console.log(err));
+    .catch(showErrorNotification);
 }
 
 function createCard(data) {
@@ -125,10 +130,8 @@ function createAddPlacePopup(galleryList) {
   return new PopupWithForm(addPlacePopupSelector, (e, data) => {
     api.checkIfImageExist(data.link)
     .then(res => api.addCard(data))
-    .then(data => {
-      galleryList.addItem(createCard(data));
-      })
-    .catch(err => console.log(err));
+    .then(data => galleryList.addItem(createCard(data)))
+    .catch(showErrorNotification);
     e.target.reset();
   })
 }
@@ -137,9 +140,14 @@ function handleUpdatePopup(e, input) {
   api.checkIfImageExist(input.avatar)
   .then(res => api.updateUserAvatar(input))
   .then(res => user.setAvatar(input))
-  .catch(err => console.log(err));
+  .catch(showErrorNotification);
+}
+ 
+function showErrorNotification(errorMsg) {
+  notificationFactory.showNotification('error', errorMsg);
 }
 
- 
-
+function showSuccessNotification(successMsg) {
+  notificationFactory.showNotification('success', successMsg);
+}
   

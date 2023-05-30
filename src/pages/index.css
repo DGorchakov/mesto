@@ -42,3 +42,6 @@
 @import url(../blocks/profile/__edit-avatar/profile__edit-avatar.css);
 @import url(../blocks/notification/__close/notification__close.css);
 @import url(../blocks/notification/__text/notification__text.css);
+@import url(../blocks/notification/_type/_error/notification_type_error.css);
+@import url(../blocks/notification/_type/_success/notification_type_success.css);
+@import url(../blocks/notification/__list/notification__list.css);

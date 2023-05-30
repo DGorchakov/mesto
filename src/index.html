@@ -84,11 +84,13 @@
     </form>
   </div>
 </div>
-  <div class="notification">
-    <div class="notification__icon"></div>
-    <p class="notification__text">Бла бла бла</p>
-    <button type="button" class="notification__close" aria-label="Закрыть нотификацию"></button>
-  </div>
+  <ul class="notification__list"></ul>
+  <template id="notification-template">
+    <li class="notification">
+      <p class="notification__text">Бла бла бла</p>
+      <button type="button" class="notification__close" aria-label="Закрыть нотификацию"></button>
+    </li>
+  </template>
   <template id="card-template">
     <li class="gallery__item">
       <button type="button" class="gallery__trush-btn" aria-label="Удалить карточку"></button>

@@ -1,22 +1,22 @@
 @keyframes move {
     0% {right: -400px}
-    30% {right: 20px}
-    70% {right: 20px;}
-    100% {right: -400px;}
+    100% {right: 0}
 }
 
-
 .notification {
+    position: relative;
     font-family: 'Inter', 'Arial', sans-serif;
     color:rgb(78, 76, 76);
-    width: 350px;
-    position: fixed;
+    max-width: 350px;
+    min-width: 200px;
     background-color: white;
-    top: 40px;
-    right: 10px;
     border-radius: 4px;
-    padding: 20px 30px;
- 
-    animation-duration: 4s;
+    padding: 20px 40px 20px 50px;
+    background-position: 10px;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    list-style: none;
+    animation: move;
+    animation-duration: 2s;
     animation-direction: normal;
 }

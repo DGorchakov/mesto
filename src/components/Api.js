@@ -101,6 +101,7 @@ export default class Api {
 
     checkIfImageExist(url) {
         return fetch(url)
+        .catch(err => Promise.reject("Изображение не может быть скачено. Попробуйте другую ссылку"))
         .then(res => {
             if (res.ok) return res;
             return Promise.reject("Изображение не может быть скачено. Попробуйте другую ссылку");

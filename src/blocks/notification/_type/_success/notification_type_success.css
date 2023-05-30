@@ -1,3 +1,4 @@
 .notification_type_success {
     border-left: 5px solid green;
+    background-image: url(../../../../images/success.png);
 }
