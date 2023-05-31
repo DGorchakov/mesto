@@ -45,4 +45,5 @@
 .notification_type_error{background-image:url(dc5f4d98207542195426.svg);border-left:5px solid #d75a4a}
 .notification_type_success{background-image:url(285f4a06b6e6fc0e2252.png);border-left:5px solid green}
 .notification__list{display:flex;flex-direction:column;position:fixed;right:10px;row-gap:10px;top:40px}
+@keyframes awaiting{0%{content:""}33%{content:"."}66%{content:".."}to{content:"..."}}.popup__submit_loading:after{animation:awaiting 2s infinite;content:""}
 
