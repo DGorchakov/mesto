@@ -7,14 +7,19 @@ export const validatorConfig = {
     errorClass: 'popup__error_visible'
   }
 
+export const profileSelectors = {
+  userNameSelector: '.profile__title',
+  userAboutSelector: '.profile__about',
+  userAvatarSelector: '.profile__avatar'
+}
+
  export const editButton = document.querySelector('.profile__edit-button');
  export const addPlaceButton = document.querySelector('.profile__add-button');
- export const profileNameSelector = '.profile__title';
- export const profileAboutSelector = '.profile__about';
- export const profileAvatarSelector = '.profile__avatar';
  export const popupWithImageSelector = '.image-popup';
  export const editProfilePopupSelector = '.profile-popup';
  export const addPlacePopupSelector = '.place-popup';
  export const deleteCardPopupSelector = '.delete-card-popup';
  export const updateAvatarPopupSelector = '.avatar-popup';
  export const galleryContainerSelector = '.gallery__container';
+
+ export const defaultErrorMsg = 'Что-то пошло не так. Попробуйте позднее.'

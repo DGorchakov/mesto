@@ -45,3 +45,4 @@
 @import url(../blocks/notification/_type/_error/notification_type_error.css);
 @import url(../blocks/notification/_type/_success/notification_type_success.css);
 @import url(../blocks/notification/__list/notification__list.css);
+@import url(../blocks/popup/__submit/_loading/popup__submit_loading.css);

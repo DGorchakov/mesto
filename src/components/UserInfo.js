@@ -1,12 +1,12 @@
 const noAvatar = new URL('../images/avatar.svg', import.meta.url);
 
 export default class UserInfo {
-    constructor(userNameSelector, userAboutSelector, userAvatarSelector, updateAvatarPopup){
+    constructor({userNameSelector, userAboutSelector, userAvatarSelector}, handleInitUser, updateAvatarPopup){
         this._userNameEl = document.querySelector(userNameSelector);
         this._userAboutEl = document.querySelector(userAboutSelector);
         this._userAvatarEl = document.querySelector(userAvatarSelector);
         this._updateAvatarPopup = updateAvatarPopup;
-        this.setEventListeners();
+        this._handleInitUser = handleInitUser;
     }
 
     getUserInfo() {
@@ -20,7 +20,12 @@ export default class UserInfo {
         return this._userId;
     }
 
-    setEventListeners() {
+    initUser() {
+        this._handleInitUser();
+        this._setEventListeners();
+    }
+
+    _setEventListeners() {
         this._userAvatarEl.addEventListener('click', () => this._updateAvatarPopup.open());
     }
 
@@ -31,6 +36,10 @@ export default class UserInfo {
     }
 
     setAvatar({avatar}) {
-        this._userAvatarEl.style.backgroundImage = `url('${avatar}')`;
+        const img = document.createElement('img');
+        img.src = avatar;
+
+        img.onload = () => this._userAvatarEl.style.backgroundImage = `url('${avatar}')`;
+        img.onerror = () => this._userAvatarEl.style.backgroundImage = `url('${noAvatar}')`;
     }
 }

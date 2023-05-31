@@ -15,6 +15,12 @@ export default class FormValidator {
         this._setEventListeners();
     };
 
+    refreshValidation() {
+        this._inputList.forEach(inputEl => this._checkInputValidity(inputEl));
+        this._toggleButtonState();
+        this._inputList.forEach(inputEl => inputEl.setCustomValidity(''));
+    }
+
     _setEventListeners() {
         this._toggleButtonState();
         this._inputList.forEach(inputEl => {
@@ -23,10 +29,11 @@ export default class FormValidator {
                 this._checkInputValidity(inputEl);
                 this._toggleButtonState();
             });
+
         });
         this._formElement.addEventListener('reset', () => {
             this._disableSubmitButton(true);
-        })
+        });
     }
     
     _toggleButtonState() {
@@ -39,6 +46,7 @@ export default class FormValidator {
     }
     
     _checkInputValidity(inputElement) {
+        console.log(inputElement.validity.valid)
         if (!inputElement.validity.valid) {
           this._showInputError(inputElement, inputElement.validationMessage);
         } else {

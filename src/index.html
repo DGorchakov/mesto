@@ -22,7 +22,7 @@
             </div>
             <p class="profile__about"></p>
           </div>
-          <button type="button" class="profile__add-button" aria-label="Добавить изображение" hidden></button>
+          <button type="button" class="profile__add-button" aria-label="Добавить изображение"></button>
         </section>
         <section class="gallery" aria-label="Галерея с изображениями">
           <ul class="gallery__container">
@@ -42,7 +42,10 @@
         <span class="popup__error name-error"></span>
         <input type="text" name ="about" id="about" class="popup__input popup__input_type_about"  placeholder="О себе" required minlength="2" maxlength="200">
         <span class="popup__error about-error"></span>
-        <button type="submit" class="popup__submit">Сохранить</button>
+        <button type="submit" class="popup__submit">
+          <span class="popup__submit-text">Сохранить</span>
+          <span class="popup__submit_loading" hidden>Сохранение</span>
+        </button>
       </form>
     </div>
   </div>
@@ -55,7 +58,10 @@
         <span class="popup__error email-error"></span>
         <input type="url" name ="link" id="link" class="popup__input popup__input_type_link"  placeholder="Ссылка на карточку" required>
         <span class="popup__error link-error"></span>
-        <button type="submit" class="popup__submit">Создать</button>
+        <button type="submit" class="popup__submit">
+          <span class="popup__submit-text">Создать</span>
+          <span class="popup__submit_loading" hidden>Создание</span>
+        </button>
       </form>
     </div>
   </div>
@@ -80,14 +86,17 @@
     <form class="popup__form" name="update-avatar" novalidate>
       <input type="url" name ="avatar" id="link" class="popup__input popup__input_type_link"  placeholder="Ссылка.." required>
       <span class="popup__error link-error"></span>
-      <button type="submit" class="popup__submit">Обновить</button>
+      <button type="submit" class="popup__submit">
+        <span class="popup__submit-text">Сохранить</span>
+        <span class="popup__submit_loading" hidden>Сохранение</span>
+      </button>
     </form>
   </div>
 </div>
   <ul class="notification__list"></ul>
   <template id="notification-template">
     <li class="notification">
-      <p class="notification__text">Бла бла бла</p>
+      <p class="notification__text"></p>
       <button type="button" class="notification__close" aria-label="Закрыть нотификацию"></button>
     </li>
   </template>

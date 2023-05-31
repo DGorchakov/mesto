@@ -33,6 +33,7 @@ export default class Card {
         this.setLikeCount(this._likeCount);
         this._galleryImg = this._element.querySelector('.gallery__img');
         this._setEventListeners();
+        this._galleryImg.onerror = () => this._galleryImg.src = noPhotoImg;
         this.toggleLikeState(this._isLiked);
         this._hideTrashButton();
         this._galleryImg.alt = this._name;

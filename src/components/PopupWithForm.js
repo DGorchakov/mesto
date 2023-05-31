@@ -7,12 +7,15 @@ export default class PopupWithForm extends Popup {
         this._formEl = this.popupEl.querySelector('.popup__form');
     }
 
+    get formEl() {
+        return this._formEl;
+    }
+
     setEventListeners(){
         super.setEventListeners();
         this._formEl.addEventListener('submit', (e) => {
             e.preventDefault();
             this._handleSubmitForm(e, this._getInputValues());
-            this.close();
         });
     }
 
@@ -37,5 +40,10 @@ export default class PopupWithForm extends Popup {
         });
 
         return this;
+    }
+
+    setLoadingSubmit(isLoading) {
+        this.popupEl.querySelector('.popup__submit-text').hidden = isLoading;
+        this.popupEl.querySelector('.popup__submit_loading').hidden = !isLoading;
     }
 }

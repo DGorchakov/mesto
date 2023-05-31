@@ -35,7 +35,7 @@ export default class Api {
         })
         .then(res => {
             if (res.ok) return res.json();
-            if (res.status == 403) return Promise.reject("Нельзя удалить карточку другого пользователя");
+            if (res.status == 403) return Promise.reject(res);
             return Promise.reject("Произошла ошибка. Попробуйте позднее");
         })
     }
@@ -97,14 +97,5 @@ export default class Api {
             if (res.ok) return res.json();
             return Promise.reject(res);
         })
-    }
-
-    checkIfImageExist(url) {
-        return fetch(url)
-        .catch(err => Promise.reject("Изображение не может быть скачено. Попробуйте другую ссылку"))
-        .then(res => {
-            if (res.ok) return res;
-            return Promise.reject("Изображение не может быть скачено. Попробуйте другую ссылку");
-        });
     }
 }
