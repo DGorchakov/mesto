@@ -13,7 +13,7 @@
     }    
 }
 
-.popup__submit_loading::after {
+.popup__submit-loading::after {
     content: '';
     animation: awaiting 2s infinite;
 }

@@ -46,6 +46,6 @@ export default class PopupWithForm extends Popup {
 
     setLoadingSubmit(isLoading) {
         this.popupEl.querySelector('.popup__submit-text').hidden = isLoading;
-        this.popupEl.querySelector('.popup__submit_loading').hidden = !isLoading;
+        this.popupEl.querySelector('.popup__submit-loading').hidden = !isLoading;
     }
 }

@@ -29,7 +29,7 @@ const api = new Api({
   }
 })
 
-const notificationFactory = new NotificationFactory('#notification-template', document.querySelector('.notification__list'));
+const notificationFactory = new NotificationFactory('#notification-template', document.querySelector('.notification-list'));
 
 const galleryList = new Section((card) => galleryList.addItem(createCard(card)), galleryContainerSelector);
 
