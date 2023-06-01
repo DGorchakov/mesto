@@ -1,6 +1,6 @@
 @keyframes move {
-    0% {right: -400px}
-    100% {right: 0}
+    0% {right: -400px;}
+    100% {right: 0;}
 }
 
 .notification {
