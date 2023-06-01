@@ -64,7 +64,7 @@ export default class Card {
 
         this._trashBtn.addEventListener('click', () => {
             this._deleteCardPopup.open();
-            this._deleteCardPopup.cardToDelete = this;
+            this._deleteCardPopup._cardRef = this;
         });
     }
 

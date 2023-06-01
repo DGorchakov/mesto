@@ -1,7 +1,6 @@
 import '../pages/index.css';
 import Card from '../components/Card.js'
 import FormValidator from '../components/FormValidator.js';
-import DeleteCardPopup from '../components/DeleteCardPopup';
 import PopupWithForm from '../components/PopupWithForm';
 import PopupWithImage from '../components/PopupWithImage';
 import Section from '../components/Section.js';
@@ -37,7 +36,8 @@ const galleryList = new Section((card) => galleryList.addItem(createCard(card)),
 const formValidators = {};
 
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  const formList = Array.from(document.querySelectorAll(config.formSelector)).filter(form => form.getAttribute('name')!== 'delete-card')
+
     formList.forEach((formElement) => {
       const validator = new FormValidator(config, formElement);
       const formName = formElement.getAttribute('name');
@@ -49,7 +49,7 @@ const enableValidation = (config) => {
 enableValidation(validatorConfig);
 
 const popups = {
-  deleteCard : new DeleteCardPopup(deleteCardPopupSelector, handleDeleteCard),
+  deleteCard : new PopupWithForm(deleteCardPopupSelector, handleDeleteCardSubmit),
   updateAvatar: new PopupWithForm(updateAvatarPopupSelector, handleUpdateAvatar),
   addPlace: new PopupWithForm(addPlacePopupSelector, handleAddCard),
   editProfile : new PopupWithForm(editProfilePopupSelector, handleUpdateUserData),
@@ -93,13 +93,15 @@ function handleCardClick(name, link) {
   popups.imageView.open(name, link);
 }
 
-function handleDeleteCard() {
-  api.deleteCard(this.id)
+function handleDeleteCardSubmit() {
+  api.deleteCard(this._cardRef.id)
   .then(res => {
-    this.removeCardElement(); 
-    showSuccessNotification("Карточка удалена");
+    this._cardRef.removeCardElement();
+    showSuccessNotification(res.message);
+    return res;
   })
-  .catch(res => res.json().then(errBody => showErrorNotification(errBody.message)));
+  .catch(res => res.json().then(errJSON => showErrorNotification(errJSON.message)))
+  .finally(this.close())
 }
 
 function handleLikeClick() {
@@ -147,8 +149,8 @@ function showErrorNotification(errorMsg) {
   notificationFactory.showNotification('error', errorMsg);
 }
 
-function showSuccessNotification(successMsg) {
-  notificationFactory.showNotification('success', successMsg);
+function showSuccessNotification(msg) {
+  notificationFactory.showNotification('success', msg);
 }
 
 function handleFormErrors(response, popup) {
