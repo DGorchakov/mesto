@@ -29,9 +29,14 @@ const api = new Api({
   }
 })
 
+const cards = {};
+
 const notificationFactory = new NotificationFactory('#notification-template', document.querySelector('.notification-list'));
 
 const galleryList = new Section((card) => galleryList.addItem(createCard(card)), galleryContainerSelector);
+
+const user = new UserInfo(profileSelectors, handleAvatarClick);
+user.setEventListeners();
 
 const formValidators = {};
 
@@ -58,91 +63,95 @@ const popups = {
 
 Object.values(popups).forEach(popup => popup.setEventListeners());
 
+Promise.all([                
+  api.getUserInfo(), 
+  api.getInitialCards() 
+])
+.then(([userData, cards])=>{
+  user.setUserInfo(userData);
+  user.setAvatar(userData);
+  editButton.hidden = false;
+
+  galleryList.renderItems(cards);
+})
+.catch(() => showErrorNotification(defaultErrorMsg));
+
 editButton.addEventListener('click', () => popups.editProfile.setInputValues(user.getUserInfo()).open());
 addPlaceButton.addEventListener('click', () => popups.addPlace.open());
 
-api.getInitalCards()
-.then(cards => galleryList.renderItems(cards))
-.catch(() => showErrorNotification(defaultErrorMsg));
-
-const user = new UserInfo(profileSelectors, handleInitUser, popups.updateAvatar);
-user.initUser();
-
-function handleInitUser() {
-  api.getUserInfo()
-  .then(userData => {
-    this.setUserInfo(userData);
-    this.setAvatar(userData);
-    editButton.hidden = false;
-  })
-  .catch(() => showErrorNotification(defaultErrorMsg));
-}
-
 function handleUpdateUserData(e, inputValues) {
-  this.setLoadingSubmit(true);
+  popups.editProfile.setLoadingSubmit(true);
   api.updateUserInfo(inputValues)
     .then(userData => {
       user.setUserInfo(userData);
       this.close();
     })
     .catch(res => handleFormErrors(res, this))
-    .finally(() => this.setLoadingSubmit(false))
+    .finally(() => popups.editProfile.setLoadingSubmit(false))
 }
 
 function handleCardClick(name, link) {
   popups.imageView.open(name, link);
 }
 
-function handleDeleteCardSubmit() {
-  api.deleteCard(this._cardRef.id)
+function handleCardTrashClick() {
+  popups.deleteCard.setInputValues({cardId: this.id});
+  popups.deleteCard.open();
+}
+
+function handleDeleteCardSubmit(e, {cardId}) {
+  api.deleteCard(cardId)
   .then(res => {
-    this._cardRef.removeCardElement();
+    cards[cardId].removeCardElement();
     showSuccessNotification(res.message);
+    popups.deleteCard.close();
     return res;
   })
-  .catch(res => res.json().then(errJSON => showErrorNotification(errJSON.message)))
-  .finally(this.close())
+  .catch(res => res.json().then(errJSON => showErrorNotification(errJSON.message)));
 }
 
 function handleLikeClick() {
   const request = this.isLiked ? api.removeLikeFromCard(this.id) : api.likeCard(this.id);
   
   request.then(cardData => {
-      this.setLikeCount(cardData.likes.length);
-      this.toggleLikeState(!this.isLiked);
-      this.setLikedByCurrentUser(!this.isLiked);
+      this.likeCount = cardData.likes.length;
+      this.isLiked = !this.isLiked;
+      this.renderLikeState();
     })
     .catch(() => showErrorNotification(defaultErrorMsg));
 }
 
 function createCard(data) {
-  const card = new Card(data, '#card-template', handleCardClick, handleLikeClick, popups.deleteCard);
-  card.setLikedByCurrentUser(data.likes.findIndex((likedUser) => likedUser._id === user.id) >= 0);
-  card.setCreatedByCurrentUser(data.owner._id === user.id);
-  return card.getCardElement();
+  const card = new Card(data, '#card-template', handleCardClick, handleLikeClick, handleCardTrashClick);
+  cards[card.id] = card;
+  return card.getCardElement(user);
 }
 
 function handleAddCard(e, data){
-  this.setLoadingSubmit(true);
+  popups.addPlace.setLoadingSubmit(true);
   api.addCard(data)
     .then(data => {
       galleryList.addItem(createCard(data));
-      this.close();
+      popups.addPlace.close();
       e.target.reset();
     })
     .catch(res => handleFormErrors(res, this))
-    .finally(() => this.setLoadingSubmit(false))
+    .finally(() => popups.addPlace.setLoadingSubmit(false))
+}
+
+function handleAvatarClick() {
+  popups.updateAvatar.open();
 }
 
 function handleUpdateAvatar(e, input) {
-  this.setLoadingSubmit(true);
+  popups.updateAvatar.setLoadingSubmit(true);
   api.updateUserAvatar(input)
   .then(res => {
     user.setAvatar(input);
-    this.close();
+    popups.updateAvatar.close();
   })
   .catch(res => handleFormErrors(res, this))
-  .finally(() => this.setLoadingSubmit(false))
+  .finally(() => popups.updateAvatar.setLoadingSubmit(false))
 }
  
 function showErrorNotification(errorMsg) {

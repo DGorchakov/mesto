@@ -4,7 +4,7 @@ export default class Api {
         this.headers = headers;
     }
 
-    getInitalCards() {
+    getInitialCards() {
         return fetch(this.baseUrl + '/cards', {headers: this.headers})
         .then(res => {
             if (res.ok) return res.json();
