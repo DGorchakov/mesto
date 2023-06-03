@@ -7,6 +7,7 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo';
 import Api from '../components/Api';
 import NotificationFactory from '../components/NotificationFactory';
+import ActionConfirmPopup from '../components/ActionConfirmPopup';
 import {
   validatorConfig,
   profileSelectors,
@@ -29,8 +30,6 @@ const api = new Api({
   }
 })
 
-const cards = {};
-
 const notificationFactory = new NotificationFactory('#notification-template', document.querySelector('.notification-list'));
 
 const galleryList = new Section((card) => galleryList.addItem(createCard(card)), galleryContainerSelector);
@@ -41,7 +40,7 @@ user.setEventListeners();
 const formValidators = {};
 
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector)).filter(form => form.getAttribute('name')!== 'delete-card')
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
 
     formList.forEach((formElement) => {
       const validator = new FormValidator(config, formElement);
@@ -54,7 +53,7 @@ const enableValidation = (config) => {
 enableValidation(validatorConfig);
 
 const popups = {
-  deleteCard : new PopupWithForm(deleteCardPopupSelector, handleDeleteCardSubmit),
+  deleteCard : new ActionConfirmPopup(deleteCardPopupSelector, handleDeleteCardSubmit),
   updateAvatar: new PopupWithForm(updateAvatarPopupSelector, handleUpdateAvatar),
   addPlace: new PopupWithForm(addPlacePopupSelector, handleAddCard),
   editProfile : new PopupWithForm(editProfilePopupSelector, handleUpdateUserData),
@@ -94,15 +93,15 @@ function handleCardClick(name, link) {
   popups.imageView.open(name, link);
 }
 
-function handleCardTrashClick() {
-  popups.deleteCard.setInputValues({cardId: this.id});
+function handleCardTrashClick(card) {
+  popups.deleteCard.context = card;
   popups.deleteCard.open();
 }
 
-function handleDeleteCardSubmit(e, {cardId}) {
-  api.deleteCard(cardId)
+function handleDeleteCardSubmit() {
+  api.deleteCard(this.id)
   .then(res => {
-    cards[cardId].removeCardElement();
+    this.removeCardElement();
     showSuccessNotification(res.message);
     popups.deleteCard.close();
     return res;
@@ -122,9 +121,7 @@ function handleLikeClick() {
 }
 
 function createCard(data) {
-  const card = new Card(data, '#card-template', handleCardClick, handleLikeClick, handleCardTrashClick);
-  cards[card.id] = card;
-  return card.getCardElement(user);
+  return new Card(data, user, '#card-template', handleCardClick, handleLikeClick, handleCardTrashClick).getCardElement();
 }
 
 function handleAddCard(e, data){

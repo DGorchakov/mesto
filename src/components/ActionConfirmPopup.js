@@ -1,20 +1,24 @@
 import Popup from "./Popup";
 
-export default class DeleteCardPopup extends Popup {
+export default class ActionConfirmPopup extends Popup {
     constructor(popupSelector, submitHandler) {
         super(popupSelector);
         this._submitHandler = submitHandler;
     }
 
-    set cardToDelete(card) {
-        this._currentCard = card;
+    set context(context) {
+        this._context = context;
+    }
+
+    get context() {
+        return this._context;
     }
 
     setEventListeners() {
         super.setEventListeners();
         this.popupEl.querySelector('.popup__submit').addEventListener('click', e  => {
-            this._submitHandler.bind(this._currentCard)();
-            this.close();
+            e.preventDefault();
+            this._submitHandler.bind(this._context)();
         });
     }
 }

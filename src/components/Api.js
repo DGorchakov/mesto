@@ -6,10 +6,7 @@ export default class Api {
 
     getInitialCards() {
         return fetch(this.baseUrl + '/cards', {headers: this.headers})
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     addCard({name, link}) {
@@ -22,10 +19,7 @@ export default class Api {
                 link
             })
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     deleteCard(cardId) {
@@ -33,11 +27,7 @@ export default class Api {
             method: 'DELETE',
             headers: this.headers
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            if (res.status == 403) return Promise.reject(res);
-            return Promise.reject("Произошла ошибка. Попробуйте позднее");
-        })
+        .then(this._getResponseData);
     }
 
     likeCard(cardId) {
@@ -45,10 +35,7 @@ export default class Api {
             method: 'PUT',
             headers: this.headers
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     removeLikeFromCard(cardId) {
@@ -56,18 +43,12 @@ export default class Api {
             method: 'DELETE',
             headers: this.headers
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     getUserInfo() {
         return fetch(this.baseUrl + '/users/me', {headers: this.headers})
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     updateUserInfo({name, about}) {
@@ -79,10 +60,7 @@ export default class Api {
                 about
             })
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
 
     updateUserAvatar({avatar}) {
@@ -93,9 +71,13 @@ export default class Api {
                 avatar
             })
         })
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        })
+        .then(this._getResponseData);
     }
+
+    _getResponseData(res) {
+        if (!res.ok) {
+            return Promise.reject(res); 
+        }
+        return res.json();
+    } 
 }

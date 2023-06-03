@@ -2,12 +2,13 @@ const noPhotoImg = new URL('../images/no-photo.jpg', import.meta.url);
 
 export default class Card {
 
-    constructor(data, templateSelector, handleCardClick, handleLikeClick, handleTrashClick) {
+    constructor(data, user, templateSelector, handleCardClick, handleLikeClick, handleTrashClick) {
         this._name = data.name;
         this._link = data.link;
         this._likes = data.likes;
         this._owner = data.owner;
         this._id = data._id;
+        this._user = user;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
         this._handleLikeClick = handleLikeClick;
@@ -30,19 +31,19 @@ export default class Card {
         this._likeCount = count;
     }
 
-    getCardElement(user) {
+    getCardElement() {
         if (this._element) return this._element;
 
         this._element = this._getTemplate();        
         this._element.querySelector('.gallery__name').textContent = this._name;
-        this._isLiked = this._likes.findIndex((likedUser) => likedUser._id === user.id) >= 0;
+        this._isLiked = this._likes.findIndex((likedUser) => likedUser._id === this._user.id) >= 0;
         this._likeCount = this._likes.length;
         this._galleryImg = this._element.querySelector('.gallery__img');
         this._galleryImg.alt = this._name;
         this._galleryImg.src = this._link;
         this._galleryImg.onerror = () => this._galleryImg.src = noPhotoImg;
         this._setEventListeners();
-        this._hideTrashButton(user);
+        this._hideTrashButton();
         this.renderLikeState();
 
         return this._element;
@@ -69,7 +70,7 @@ export default class Card {
         this._likeBtn.addEventListener('click', this._handleLikeClick.bind(this));
 
         this._trashBtn.addEventListener('click', () => {
-            this._handleTrashClick();
+            this._handleTrashClick(this);
         });
     }
 
@@ -82,7 +83,7 @@ export default class Card {
         this._element.remove();
     }
 
-    _hideTrashButton(user) {
-        if (!(this._owner._id === user.id)) this._trashBtn.hidden = true;
+    _hideTrashButton() {
+        if (!(this._owner._id === this._user.id)) this._trashBtn.hidden = true;
     }
 }
