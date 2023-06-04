@@ -35,7 +35,7 @@
 .popup_opened{opacity:1;transition:opacity .5s ease-in,visibility .5s;visibility:visible}
 .popup__error{color:red;font-family:Inter;font-size:12px;font-style:normal;font-weight:400;line-height:15px;margin:5px 0 14px;min-height:12px}
 .popup__input_type_error{border-bottom:1px solid red;opacity:1}
-@keyframes move{0%{right:-400px}to{right:0}}.notification{animation:move;animation-direction:normal;animation-duration:2s;background-color:rgba(64,64,64,.8);border:1px solid #5b5656;border-radius:6px;color:#fff;font-family:Inter,Arial,sans-serif;list-style:none;max-width:350px;min-width:200px;padding:20px;position:relative}
+@keyframes move{0%{right:-400px}to{right:0}}.notification{animation:move;animation-direction:normal;animation-duration:2s;background-color:rgba(32,32,32,.836);border:1px solid #adadad;border-radius:6px;color:#fff;font-family:Inter,Arial,sans-serif;list-style:none;max-width:350px;min-width:200px;padding:20px;position:relative}
 .gallery__count{color:#000;display:block;font-size:13px;font-weight:400;height:13px;line-height:16px;text-align:center}
 .gallery__likes{display:flex;flex-direction:column;row-gap:3px}
 .profile__edit-avatar{background-color:#000;background-image:url(8667ac4a523e8fc42e59.svg);background-position:50%;background-repeat:no-repeat;background-size:26px 26px;border:none;height:100%;opacity:0;padding:none;position:relative;width:100%}.profile__edit-avatar:hover{cursor:pointer;opacity:.8}
