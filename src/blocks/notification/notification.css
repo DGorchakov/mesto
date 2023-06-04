@@ -9,10 +9,10 @@
     color: white;
     max-width: 350px;
     min-width: 200px;
-    background-color:rgba(64,64,64,.8);
+    background-color: rgba(32, 32, 32, 0.836);
     border-radius: 6px;
     padding: 20px;
-    border: 1px solid #5b5656;
+    border: 1px solid #adadad;
     list-style: none;
     animation: move;
     animation-duration: 2s;
