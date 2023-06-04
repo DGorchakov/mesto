@@ -35,14 +35,13 @@
 .popup_opened{opacity:1;transition:opacity .5s ease-in,visibility .5s;visibility:visible}
 .popup__error{color:red;font-family:Inter;font-size:12px;font-style:normal;font-weight:400;line-height:15px;margin:5px 0 14px;min-height:12px}
 .popup__input_type_error{border-bottom:1px solid red;opacity:1}
-@keyframes move{0%{right:-400px}to{right:0}}.notification{animation:move;animation-direction:normal;animation-duration:2s;background-color:#fff;background-position:10px;background-repeat:no-repeat;background-size:25px 25px;border-radius:4px;color:#4e4c4c;font-family:Inter,Arial,sans-serif;list-style:none;max-width:350px;min-width:200px;padding:20px 40px 20px 50px;position:relative}
+@keyframes move{0%{right:-400px}to{right:0}}.notification{animation:move;animation-direction:normal;animation-duration:2s;background-color:rgba(64,64,64,.8);border:1px solid #5b5656;border-radius:6px;color:#fff;font-family:Inter,Arial,sans-serif;list-style:none;max-width:350px;min-width:200px;padding:20px;position:relative}
 .gallery__count{color:#000;display:block;font-size:13px;font-weight:400;height:13px;line-height:16px;text-align:center}
 .gallery__likes{display:flex;flex-direction:column;row-gap:3px}
 .profile__edit-avatar{background-color:#000;background-image:url(8667ac4a523e8fc42e59.svg);background-position:50%;background-repeat:no-repeat;background-size:26px 26px;border:none;height:100%;opacity:0;padding:none;position:relative;width:100%}.profile__edit-avatar:hover{cursor:pointer;opacity:.8}
-.notification__close{background-color:#fff;background-image:url(ba59f0270c5437ef2491.png);background-repeat:no-repeat;background-size:contain;border:0;cursor:pointer;height:15px;padding:0;position:absolute;right:8px;top:8px;width:15px}
 .notification__text{margin:0}
-.notification_type_error{background-image:url(dc5f4d98207542195426.svg);border-left:5px solid #d75a4a}
-.notification_type_success{background-image:url(285f4a06b6e6fc0e2252.png);border-left:5px solid green}
+.notification_type_error{border-left:5px solid #d75a4a}
+.notification_type_success{border-left:5px solid green}
 .notification-list{display:flex;flex-direction:column;position:fixed;right:10px;row-gap:10px;top:40px}
 .popup__submit_disabled{background-color:transparent;border:1px solid #000;border-radius:2px;color:#000;opacity:.2;pointer-events:none}
 @keyframes awaiting{0%{content:""}33%{content:"."}66%{content:".."}to{content:"..."}}.popup__submit-loading:after{animation:awaiting 2s infinite;content:""}
