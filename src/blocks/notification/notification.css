@@ -7,8 +7,6 @@
     position: relative;
     font-family: 'Inter', 'Arial', sans-serif;
     color: white;
-    max-width: 350px;
-    min-width: 200px;
     background-color: rgba(32, 32, 32, 0.836);
     border-radius: 6px;
     padding: 20px;
@@ -17,4 +15,5 @@
     animation: move;
     animation-duration: 2s;
     animation-direction: normal;
+    box-sizing: border-box;
 }
